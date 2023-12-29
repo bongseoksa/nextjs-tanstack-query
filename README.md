@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## 목적
+```
+@tanstack/react-query v5.15.0
+연습 프로젝트
+
+참고)
+https://tanstack.com/query/v5/docs/react/overview
+```
+
 ## Getting Started
 
 First, run the development server:
