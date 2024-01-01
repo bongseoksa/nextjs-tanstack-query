@@ -8,6 +8,16 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import axios from "axios";
+import dynamic from "next/dynamic";
+import { useGithubUser } from "./query-sample2/qeurySameple2";
+
+const ReactQueryDevtoolsProduction = dynamic(() =>
+  import("@tanstack/react-query-devtools/build/modern/production.js").then(
+    d => ({
+      default: d.ReactQueryDevtools,
+    }),
+  ),
+);
 
 export default function Home() {
   const queryClient = new QueryClient();
@@ -23,6 +33,8 @@ export default function Home() {
       <main>
         <QueryClientProvider client={queryClient}>
           <Example />
+          <Example2 />
+          <ReactQueryDevtoolsProduction />
         </QueryClientProvider>
       </main>
     </>
@@ -44,13 +56,31 @@ export const Example = () => {
 
   return (
     <div>
-      <h1>{data.name}</h1>
+      <h1>Example1</h1>
+      <h2>{data.name}</h2>
       <p>{data.description}</p>
       <strong>👀 {data.subscribers_count}</strong>{" "}
       <strong>✨ {data.stargazers_count}</strong>{" "}
       <strong>🍴 {data.forks_count}</strong>
       <div>{isFetching ? "Updating..." : ""}</div>
-      <ReactQueryDevtools initialIsOpen />
+    </div>
+  );
+};
+
+export const Example2 = () => {
+  const { isLoading, error, data, isFetching } = useGithubUser();
+
+  if (isLoading) return "Loading...";
+  if (error)
+    console.log("An error occurred while fetching the user data ", error);
+
+  return (
+    <div>
+      <h1>Example2</h1>
+      <h2>name: {data?.name}</h2>
+      <p>bio: {data?.bio}</p>
+      <p>blog: {data.blog}</p>
+      <div>{isFetching ? "Updating..." : ""}</div>
     </div>
   );
 };
