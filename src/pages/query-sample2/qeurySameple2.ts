@@ -20,5 +20,7 @@ export const useGithubUser = () => {
   return useQuery({
     queryKey: ["githubUser"],
     queryFn: () => fetchGithubUser(),
+    staleTime: 5 * 1000, // millisceonds default 0
+    gcTime: 10 * 60 * 1000, // millisceonds default 5min
   });
 };
